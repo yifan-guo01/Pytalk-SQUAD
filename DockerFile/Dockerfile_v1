@@ -1,0 +1,27 @@
+FROM   centos:7
+MAINTAINER  YG
+USER root
+
+# set the locale
+# avoid Failed to set locale, defaulting to C.UTF-8
+RUN localedef --quiet -c -i en_US -f UTF-8 en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+RUN yum update -y \
+        && yum -y install epel-release \
+        && yum -y install python3-pip \
+        && yum -y install  java \
+        && yum -y install wget \
+        && rm /usr/bin/python && ln -s /usr/bin/python3.6 /usr/bin/python \
+        && sed -i "s#/usr/bin/python#/usr/bin/python2.7#" /usr/bin/yum-config-manager \
+        && sed -i "s#/usr/bin/python#/usr/bin/python2.7#" /usr/bin/yum \
+        && sed -i "s#/usr/bin/python#/usr/bin/python2.7#" /usr/libexec/urlgrabber-ext-down \
+        && python -m pip install --upgrade pip setuptools wheel \
+        && pip3 install torch==1.6.0+cpu torchvision==0.7.0+cpu -f https://download.pytorch.org/whl/torch_stable.html \
+        && pip3 install  stanza \
+        && pip3 install doctalk
+
+
+

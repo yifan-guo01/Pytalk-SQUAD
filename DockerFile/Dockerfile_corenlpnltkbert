@@ -1,0 +1,8 @@
+FROM doctalk4docker/doctalk_centos:v1.1
+MAINTAINER  YG
+USER root
+
+ENV CORENLP_HOME=/root/corenlp
+ENV NLTK_DATA=/root/nltk_data
+
+
